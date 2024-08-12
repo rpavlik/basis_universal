@@ -7,6 +7,7 @@
 #include <string.h>
 #include <assert.h>
 #include <algorithm>
+#include <type_traits>
 
 #if defined(__linux__) && !defined(ANDROID)
 // Only for malloc_usable_size() in basisu_containers_impl.h
@@ -190,14 +191,10 @@ namespace basisu
 
 #define BASISU_IS_SCALAR_TYPE(T) (scalar_type<T>::cFlag)
 
-#if !defined(BASISU_HAVE_STD_TRIVIALLY_COPYABLE) && defined(__GNUC__) && __GNUC__<5
-   #define BASISU_IS_TRIVIALLY_COPYABLE(...) __has_trivial_copy(__VA_ARGS__)
-#else
-   #define BASISU_IS_TRIVIALLY_COPYABLE(...) std::is_trivially_copyable<__VA_ARGS__>::value
-#endif
+#define BASISU_IS_TRIVIALLY_COPY_ASSIGNABLE(...) std::is_trivially_copy_assignable<__VA_ARGS__>::value
 
 // TODO: clean this up
-#define BASISU_IS_BITWISE_COPYABLE(T) (BASISU_IS_SCALAR_TYPE(T) || BASISU_IS_POD(T) || BASISU_IS_TRIVIALLY_COPYABLE(T) || (bitwise_copyable<T>::cFlag))
+#define BASISU_IS_BITWISE_COPYABLE(T) (BASISU_IS_SCALAR_TYPE(T) || BASISU_IS_POD(T) || BASISU_IS_TRIVIALLY_COPY_ASSIGNABLE(T) || (bitwise_copyable<T>::cFlag))
 
 #define BASISU_IS_BITWISE_COPYABLE_OR_MOVABLE(T) (BASISU_IS_BITWISE_COPYABLE(T) || (bitwise_movable<T>::cFlag))
 
