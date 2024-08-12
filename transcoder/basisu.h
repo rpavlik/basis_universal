@@ -288,7 +288,10 @@ namespace basisu
 
 		inline packed_uint() { static_assert(NumBytes <= sizeof(uint64_t), "Invalid NumBytes"); }
 		inline packed_uint(uint64_t v) { *this = v; }
-		inline packed_uint(const packed_uint& other) { *this = other; }
+		inline packed_uint(const packed_uint& other) noexcept = default;
+		packed_uint(packed_uint&& rhs) noexcept = default;
+		packed_uint& operator= (const packed_uint& rhs) noexcept = default;
+		packed_uint& operator= (packed_uint&& rhs) noexcept = default;
 
 		inline packed_uint& operator= (uint64_t v)
 		{
@@ -297,11 +300,6 @@ namespace basisu
 			return *this;
 		}
 
-		inline packed_uint& operator= (const packed_uint& rhs)
-		{
-			memcpy(m_bytes, rhs.m_bytes, sizeof(m_bytes));
-			return *this;
-		}
 
 		inline operator uint32_t() const
 		{
