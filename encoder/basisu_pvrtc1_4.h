@@ -41,8 +41,7 @@ namespace basisu
 
 		inline void clear()
 		{
-			m_modulation = 0;
-			m_endpoints = 0;
+			*this = {};
 		}
 
 		inline bool get_block_uses_transparent_modulation() const
