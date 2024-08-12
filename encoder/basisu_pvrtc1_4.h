@@ -31,8 +31,8 @@ namespace basisu
 		uint32_t m_endpoints;
 
 		pvrtc4_block() : m_modulation(0), m_endpoints(0) { }
-		pvrtc4_block(const pvrtc4_block& rhs) = default;
-		pvrtc4_block& operator= (const pvrtc4_block& rhs) = default;
+		pvrtc4_block(const pvrtc4_block& rhs) noexcept = default;
+		pvrtc4_block& operator= (const pvrtc4_block& rhs) noexcept = default;
 
 		inline bool operator== (const pvrtc4_block& rhs) const
 		{
