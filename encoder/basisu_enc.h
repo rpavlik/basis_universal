@@ -276,7 +276,8 @@ namespace basisu
 		inline vec(T v0, T v1) { set(v0, v1); }
 		inline vec(T v0, T v1, T v2) { set(v0, v1, v2); }
 		inline vec(T v0, T v1, T v2, T v3) { set(v0, v1, v2, v3); }
-		inline vec(const vec &other) { for (uint32_t i = 0; i < N; i++) m_v[i] = other.m_v[i]; }
+		inline vec(const vec &other) noexcept = default;
+		inline vec& operator= (const vec &other) noexcept = default;
 		template <uint32_t OtherN, typename OtherT> inline vec(const vec<OtherN, OtherT> &other) { set(other); }
 
 		inline T operator[](uint32_t i) const { assert(i < N); return m_v[i]; }
@@ -356,7 +357,6 @@ namespace basisu
 			return *this;
 		}
 
-		inline vec &operator=(const vec &rhs) { if (this != &rhs) for (uint32_t i = 0; i < N; i++) m_v[i] = rhs.m_v[i]; return *this; }
 		template <uint32_t OtherN, typename OtherT> inline vec &operator=(const vec<OtherN, OtherT> &rhs) { set(rhs); return *this; }
 
 		inline const T *get_ptr() const { return reinterpret_cast<const T *>(&m_v[0]); }
@@ -799,6 +799,9 @@ namespace basisu
 			a = rhs.a;
 			return *this;
 		}
+		color_rgba (const color_rgba &rhs) noexcept = default;
+		color_rgba &operator= (const color_rgba &rhs) noexcept = default;
+		color_rgba &operator= (color_rgba &&rhs) noexcept = default;
 
 		inline color_rgba(int y)
 		{

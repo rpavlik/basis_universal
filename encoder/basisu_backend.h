@@ -182,6 +182,10 @@ namespace basisu
 		{
 			clear();
 		}
+		basisu_backend_slice_desc(const basisu_backend_slice_desc& rhs) noexcept = default;
+		basisu_backend_slice_desc& operator=(const basisu_backend_slice_desc& rhs) noexcept = default;
+		basisu_backend_slice_desc(basisu_backend_slice_desc&& rhs) noexcept = default;
+		basisu_backend_slice_desc& operator=(basisu_backend_slice_desc&& rhs) noexcept = default;
 
 		void clear()
 		{
